@@ -29,7 +29,6 @@ def encrypt(num_rails, plaintext):
     cipher = ''.join(cipher_list)
     return cipher
 
-print(encrypt(3, 'WEAREDISCOVEREDFLEEATONCE'))
 
 
 # used by decrypt()
@@ -40,14 +39,14 @@ def calculate_rail_units(num_rails, units):
     curr = 0
     rail_units = []
     cycle_length = (num_rails * 2) - 2
-    width = units / cycle_length
+    width = int(units / cycle_length)
     remainder = units % cycle_length
 
     while curr < num_rails:
         if curr == 0 or curr == num_rails - 1:  # top or bottom rail
             units_per_cycle = 1
         else:
-            units_per_cycle = 0
+            units_per_cycle = 2
 
         extra = 0
         if remainder > 0:
@@ -74,11 +73,32 @@ def decrypt(num_rails, cypher):
     rails = []
     part_begin = 0  # partition beginning
     part_end = 0    # partition end
+    # print(str(rail_partition))      # debugging
     # curr = 0
     for curr in range(num_rails):
         # curr += 1
         part_begin = part_end
         part_end = rail_partition[curr]
-        rails.append(cypher[part_begin:part_end])
+        # print(str(type(part_begin)))     # debugging
+        # print(str(type(part_end)))       # debugging
+        rails.append(list(cypher[part_begin:part_end]))
 
     # @TODO: this is where things ought to be finished
+    plain_list = []
+    nonempty = num_rails    # rails still containing units
+    direction = -1
+    curr = 0                # current rail
+    # print(str(rails))       # debugging
+    while nonempty > 0:
+        plain_list.append(rails[curr].pop(0))
+        if not rails[curr]:
+            nonempty -= 1   # current rail is empty
+        if curr == 0 or curr == num_rails - 1:  # boundary reached
+            direction *= -1     # switch direction
+        curr += direction
+
+    plain = ''.join(plain_list)
+    return plain
+
+print(encrypt(4, 'here\'s the thing'))
+print(decrypt(4, encrypt(4, 'here\'s the thing')))
