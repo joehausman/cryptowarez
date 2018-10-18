@@ -1,3 +1,5 @@
+# Joe Hausman
+
 import sys
 
 def generate_dicts(plainkey, cipherkey, cipher_to_plain, plain_to_cipher):
@@ -12,7 +14,6 @@ def generate_dicts(plainkey, cipherkey, cipher_to_plain, plain_to_cipher):
         cipher_to_plain[cipherkey[curr]] = plainkey[curr]
         curr += 1
 
-    # return plain_to_cipher, cipher_to_plain
 
 def translate(dict, line):
     result = []
@@ -37,10 +38,6 @@ def get_keys(filename):
     return plainkey, cipherkey
 
 
-
-# print('ctp: ' + str(cipher_to_plain))
-# print('ptc: ' + str(plain_to_cipher))
-
 def user_input():
     while(True):
         stuff = input('>_')
@@ -58,8 +55,7 @@ def user_input():
     exit(0)
 
 
-
-
+#--------------------------------
 
 if len(sys.argv) != 2 and len(sys.argv) != 4:
     print('error: wrong number of command line arguments\n' +
@@ -88,18 +84,6 @@ else:   # len(sys.argv) == 4:
         elif sys.argv[2] == 'd':
             print('  ' + translate(cipher_to_plain, cipher))
         else:
-            # @TODO: print error message
+            print('error: encrypt / decrypt command expected\n' +
+                  'usage: python3 sub.py <key_file> <e/d (encrypt / decrypt)> <cipher_file>')
             exit(1)
-
-
-
-
-
-
-
-# d = {}
-# d['A'] = '1'
-# d['B'] = '2'
-# d['C'] = '3'
-#
-# print(translate(d, 'ABBCB'))
