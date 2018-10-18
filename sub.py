@@ -21,6 +21,9 @@ def translate(dict, line):
         result.append(dict[chr])
     return ''.join(result)
 
+def do_translation(dict, text):
+    print('  ' + translate(dict, text))
+
 def get_keys(filename):
     lines = []
     try:
@@ -48,9 +51,9 @@ def user_input():
         action = stuff[0]
         text = ' '.join(stuff[1:])
         if action == 'e':     # encrypt
-            print('  ' + translate(plain_to_cipher, text))
+            do_translation(plain_to_cipher, text)
         elif action == 'd':   # decrypt
-            print('  ' + translate(cipher_to_plain, text))
+            do_translation(cipher_to_plain, text)
 
     exit(0)
 
@@ -80,9 +83,9 @@ else:   # len(sys.argv) == 4:
         cipher = cipher_file.read()
         cipher_file.close()
         if sys.argv[2] == 'e':
-            print('  ' + translate(plain_to_cipher, cipher))
+            do_translation(plain_to_cipher, cipher)
         elif sys.argv[2] == 'd':
-            print('  ' + translate(cipher_to_plain, cipher))
+            do_translation(cipher_to_plain, cipher)
         else:
             print('error: encrypt / decrypt command expected\n' +
                   'usage: python3 sub.py <key_file> <e/d (encrypt / decrypt)> <cipher_file>')
